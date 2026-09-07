@@ -15,6 +15,8 @@
     /* Text */
     --on-surface: oklch(0.935 0.018 var(--h));
     --on-surface-var: oklch(0.780 0.030 var(--h));
+    /* Hue frozen — animating this one flickers in Chrome */
+    --on-surface-fixed: oklch(0.935 0.020 20);
 
     /* Accent */
     --primary: oklch(0.820 0.100 var(--h));
@@ -25,22 +27,26 @@
 
     /* Radius */
     --r-full: 999px;
+}
 
+html {
+    scroll-behavior: smooth;
     transition: --h 780ms ease;
 }
 
 body {
     background-color: var(--surface);
     color: var(--on-surface);
+    -webkit-font-smoothing: antialiased;
 }
 
 section {
     min-height: 100vh;
     padding: 80px 24px;
-
     scroll-margin-top: 70px;
 }
 
+/* ── Top bar ─────────────────────────────── */
 .bar {
     position: sticky;
     top: 0;
@@ -57,13 +63,25 @@ section {
     padding: 6px;
 }
 
+.nav {
+    position: relative;
+}
+
 .nav a {
+    position: relative;
+    z-index: 1;
     padding: 8px 16px;
-    color: var(--on-surface-var);
+    color: var(--on-surface-fixed);
     text-decoration: none;
     font-size: 14px;
 }
 
-html {
-    scroll-behavior: smooth;
+.nav-thumb {
+    position: absolute;
+    inset-block: 0;
+    left: 0;
+    z-index: 0;
+    border-radius: var(--r-full);
+    background: var(--primary);
+    transition: transform 320ms ease, width 320ms ease;
 }
