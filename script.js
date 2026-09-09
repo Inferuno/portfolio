@@ -1,5 +1,6 @@
 const sections = [...document.querySelectorAll("section")];
 const links = [...document.querySelectorAll(".nav a")];
+const modeBtn = document.querySelector("#mode");
 
 // -------------- Nav Pill -------------- //
 const thumb = document.querySelector(".nav-thumb");
@@ -44,6 +45,26 @@ function track() {
     document.documentElement.style.setProperty("--h", current.dataset.hue);
 }
 
-track();
 
 addEventListener("scroll", track);
+addEventListener("load", track);
+
+
+// -------------- Theme -------------- //
+
+modeBtn.addEventListener("click", () => {
+    document.documentElement.classList.add("theming");
+
+    let mode = document.documentElement.dataset.mode;
+    if (mode === "dark") {
+        mode = "light";
+    } else {
+        mode = "dark";
+    }
+
+    document.documentElement.dataset.mode = mode;
+    modeBtn.querySelector("span").textContent = mode === "dark" ? "dark_mode" : "light_mode";
+    modeBtn.setAttribute("aria-label", mode === "dark" ? "Switch to light mode" : "Switch to dark mode");
+
+    setTimeout(() => document.documentElement.classList.remove("theming"), 520);
+})
