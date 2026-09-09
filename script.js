@@ -4,9 +4,12 @@ const links = [...document.querySelectorAll(".nav a")];
 // -------------- Nav Pill -------------- //
 const thumb = document.querySelector(".nav-thumb");
 
+/* Moves the pill behind a link.
+   offsetWidth is how wide that link is on screen, offsetLeft how far it sits from .nav's left edge.
+ */
 function syncNav(link) {
-    thumb.style.width = (link.offsetWidth + 12) + "px";
-    thumb.style.transform = `translateX(${link.offsetLeft - 6}px)`;
+    thumb.style.width = (link.offsetWidth + 12) + "px"; // `+12`, offset adjustment
+    thumb.style.transform = `translateX(${link.offsetLeft - 6}px)`; // `-6` offset adjustment
 }
 // -------------- Color Shift Tracking -------------- //
 
@@ -29,6 +32,9 @@ function track() {
     // Sets the current section if every other check passes.
     currentSection = current.id;
 
+    // current.id is "projects", the links are href="#projects."
+    // The # is added so the two can be compared.
+    // The matching link is the one the pill moves to.
     links.forEach((link) => {
         if (link.getAttribute("href") === "#" + current.id) syncNav(link);
     });
