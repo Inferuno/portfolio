@@ -27,6 +27,13 @@
         /* Lines */
         --outline: oklch(0.520 0.028 var(--h));
 
+        /* Extra */
+        --spring: linear(0, .009, .035 2.1%, .141, .281 6.7%, .723 12.9%, .938 16.7%,
+                1.017, 1.077, 1.121, 1.149 24.3%, 1.159, 1.163, 1.161, 1.154 29.9%,
+                1.129 32.8%, 1.051 39.6%, 1.017 43.1%, .991, .977 51%, .974 53.8%,
+                .98 57.1%, .997 69.8%, 1.003 76.9%, 1);
+        /* Ye this is ai but cmon (I'll use a spring gen next time) */
+
         /* Radius */
         --r-full: 999px;
     }
@@ -82,7 +89,6 @@
         border-radius: var(--r-full);
         position: relative;
         z-index: 1;
-        padding: 8px 16px;
         color: var(--on-surface-fixed);
         text-decoration: none;
         font-size: 16px;
@@ -97,5 +103,5 @@
         z-index: 0;
         border-radius: var(--r-full);
         background: var(--p-container);
-        transition: transform 320ms ease, width 320ms ease;
+        transition: transform 320ms var(--spring), width 320ms var(--spring);
     }

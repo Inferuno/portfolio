@@ -10,6 +10,7 @@ const thumb = document.querySelector(".nav-thumb");
 function syncNav(link) {
     thumb.style.width = (link.offsetWidth + 12) + "px"; // `+12`, offset adjustment
     thumb.style.transform = `translateX(${link.offsetLeft - 6}px)`; // `-6` offset adjustment
+    // Cancels .islands 6px padding so the pill reaches the island's edges.
 }
 // -------------- Color Shift Tracking -------------- //
 
