@@ -63,7 +63,7 @@ modeBtn.addEventListener("click", () => {
     }
 
     document.documentElement.dataset.mode = mode;
-    modeBtn.querySelector("span").textContent = mode === "dark" ? "dark_mode" : "light_mode";
+    modeBtn.querySelector("span").textContent = mode === "light" ? "dark_mode" : "light_mode";
     modeBtn.setAttribute("aria-label", mode === "dark" ? "Switch to light mode" : "Switch to dark mode");
 
     setTimeout(() => document.documentElement.classList.remove("theming"), 520);
