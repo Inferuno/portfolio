@@ -54,6 +54,8 @@
         /* Ye this is ai but cmon (I'll use a spring gen next time) */
 
         --t-theme: 0ms;
+        --t-hue: 0ms;
+        --t-nav-pill: 0ms;
 
         /* Radius */
         --r-full: 999px;
@@ -64,9 +66,14 @@
     html {
         scroll-behavior: smooth;
 
-        /* Required for the entire color system, changes the color by `--h` (hue) at _780ms with easing (changeable)_. */
+        /* Required for the entire color system, changes the color by `--h` (hue) at `--t-hue` (780ms, changable below in html.ready). */
         /* Uses the @property registered --h to work. */
-        transition: --h 780ms ease;
+        transition: --h var(--t-hue) ease;
+    }
+
+    html.ready {
+        --t-hue: 780ms;
+        --t-nav-pill: 320ms;
     }
 
     body {
@@ -145,7 +152,7 @@
         z-index: 0;
         border-radius: var(--r-full);
         background: var(--p-container);
-        transition: transform 320ms var(--spring), width 320ms var(--spring);
+        transition: transform var(--t-nav-pill) var(--spring), width var(--t-nav-pill) var(--spring);
     }
 
 

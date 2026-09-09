@@ -3,10 +3,12 @@ const links = [...document.querySelectorAll(".nav a")];
 const modeBtn = document.querySelector("#mode");
 
 // -------------- Nav Pill -------------- //
-let jumping = false;
-let timerId = ""
-
 const thumb = document.querySelector(".nav-thumb");
+
+// The click handler places the pill, so track must leave it alone until the scroll finishes.
+let jumping = false;
+let timerId;
+
 
 /* Moves the pill behind a link.
    offsetWidth is how wide that link is on screen, offsetLeft how far it sits from .nav's left edge.
@@ -37,6 +39,9 @@ function track() {
     // Sets the current section if every other check passes.
     currentSection = current.id;
 
+    // Changes the url to follow the current section
+    history.replaceState(null, "", "#" + current.id);
+
     if (!jumping) {
         // current.id is "projects", the links are href="#projects."
         // The # is added so the two can be compared.
@@ -53,8 +58,18 @@ function track() {
 addEventListener("scroll", track);
 addEventListener("load", track);
 
+setTimeout(() => document.documentElement.classList.add("ready"), 100);
+
 
 // -------------- Theme -------------- //
+const lastMode = localStorage.getItem("mode");
+// Restores the saved (dark / light mode) from the last refresh.
+if (lastMode) { // If getItem returns null, the below lines would break the code (if prevents this)
+    document.documentElement.dataset.mode = lastMode;
+    modeBtn.querySelector("span").textContent = lastMode === "light" ? "dark_mode" : "light_mode";
+    modeBtn.setAttribute("aria-label", lastMode === "dark" ? "Switch to light mode" : "Switch to dark mode");
+}
+
 
 modeBtn.addEventListener("click", () => {
     document.documentElement.classList.add("theming");
@@ -67,6 +82,7 @@ modeBtn.addEventListener("click", () => {
     }
 
     document.documentElement.dataset.mode = mode;
+    localStorage.setItem("mode", mode);
     modeBtn.querySelector("span").textContent = mode === "light" ? "dark_mode" : "light_mode";
     modeBtn.setAttribute("aria-label", mode === "dark" ? "Switch to light mode" : "Switch to dark mode");
 
@@ -79,7 +95,8 @@ links.forEach((link) => {
     link.addEventListener("click", () => {
         jumping = true;
         syncNav(link);
-        clearTimeout(timerId);
+        clearTimeout(timerId); // Fast clicking would start multiple timers (at uneven timings, creates visual jumping), so this line prevents that.
         timerId = setTimeout(() => jumping = false, 700);
     });
 });
+
