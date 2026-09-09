@@ -22,6 +22,16 @@ function syncNav(link) {
 
 let currentSection = "";
 
+// Runs immediately
+// So a refresh lands on the right hue instead of the `--h: 20;` (css).
+// Note: small flash from css painting before js runs.
+const refreshedLink = location.hash;
+if (refreshedLink) {
+    sections.forEach((s) => {
+        if (refreshedLink === "#" + s.id) document.documentElement.style.setProperty("--h", s.dataset.hue);
+    })
+}
+
 function track() {
     // Color shift happens when the new section's top passes 34% down the screen. 
     // This is based off of the `0.34​`, feel free to change it.
@@ -72,6 +82,7 @@ if (lastMode) { // If getItem returns null, the below lines would break the code
 
 
 modeBtn.addEventListener("click", () => {
+    // The theme transition sits at 0ms normally so the hover states aren't sluggish. This turns it on for the flip only.
     document.documentElement.classList.add("theming");
 
     let mode = document.documentElement.dataset.mode;
@@ -86,7 +97,7 @@ modeBtn.addEventListener("click", () => {
     modeBtn.querySelector("span").textContent = mode === "light" ? "dark_mode" : "light_mode";
     modeBtn.setAttribute("aria-label", mode === "dark" ? "Switch to light mode" : "Switch to dark mode");
 
-    setTimeout(() => document.documentElement.classList.remove("theming"), 520);
+    setTimeout(() => document.documentElement.classList.remove("theming"), 520); // This turns the above comment off to make the hover state is 0ms again.
 })
 
 // -------------- Nav Click -------------- //
