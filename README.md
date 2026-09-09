@@ -11,5 +11,6 @@ Every color in the project derives from one hue value (`--h`),  `@property` regi
 The project is a **work in progress**, it's not perfect (nor will it ever be). I am working on it something like every day and plan to finish in 1-2 weeks.
 
 ### Note
-I am using ai for the parts I am stuck on, notably on a certain Chrome issue that made the navigation island's text flicker awkwardly. I resolved it by coming to the conclusion to just stop the text color animation. (and certain css properties, such as the basis of the color shifting, like `@property`).
+I am using ai for the parts I am stuck on, notably on a certain Chrome issue that made the navigation island's text flicker awkwardly. I resolved it by coming to the conclusion to just stop the 
+ color animation. (and certain css properties, such as the basis of the color shifting, like `@property`).
 The spring easing curve is also ai generated, same with creating the actual layout (not all of it, but most.)
