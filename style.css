@@ -1,87 +1,101 @@
-@property --h {
-    syntax: '<number>';
-    inherits: true;
-    initial-value: 20;
-}
+    /* -------------- Tokens -------------- */
+    @property --h {
+        syntax: '<number>';
+        inherits: true;
+        initial-value: 20;
+    }
 
-:root {
-    --h: 20;
+    :root {
+        --h: 20;
 
-    /* Surfaces */
-    --surface: oklch(0.165 0.024 var(--h));
-    --surface-c: oklch(0.205 0.026 var(--h));
-    --surface-high: oklch(0.278 0.030 var(--h));
+        /* Surfaces */
+        --surface: oklch(0.165 0.024 var(--h));
+        --surface-c: oklch(0.205 0.026 var(--h));
+        --surface-high: oklch(0.278 0.030 var(--h));
 
-    /* Text */
-    --on-surface: oklch(0.935 0.018 var(--h));
-    --on-surface-var: oklch(0.780 0.030 var(--h));
-    /* Hue frozen — animating this one flickers in Chrome */
-    --on-surface-fixed: oklch(0.935 0.020 20);
+        /* Text */
+        --on-surface: oklch(0.935 0.018 var(--h));
+        --on-surface-var: oklch(0.780 0.030 var(--h));
+        /* Freezes the hue. Animating this flickers in Chrome */
+        --on-surface-fixed: oklch(0.935 0.020 20);
 
-    /* Accent */
-    --primary: oklch(0.820 0.100 var(--h));
-    --on-primary: oklch(0.285 0.070 var(--h));
+        /* Accent */
+        --primary: oklch(0.820 0.100 var(--h));
+        --on-primary: oklch(0.285 0.070 var(--h));
+        --p-container: oklch(0.415 0.085 var(--h));
 
-    /* Lines */
-    --outline: oklch(0.520 0.028 var(--h));
+        /* Lines */
+        --outline: oklch(0.520 0.028 var(--h));
 
-    /* Radius */
-    --r-full: 999px;
-}
+        /* Radius */
+        --r-full: 999px;
+    }
 
-html {
-    scroll-behavior: smooth;
-    transition: --h 780ms ease;
-}
+    /* -------------- Base -------------- */
+    html {
+        scroll-behavior: smooth;
 
-body {
-    background-color: var(--surface);
-    color: var(--on-surface);
-    -webkit-font-smoothing: antialiased;
-}
+        /* Required for the entire color system, changes the color by `--h` (hue) at _780ms with easing (changeable)_. */
+        /* Uses the @property registered --h to work. */
+        transition: --h 780ms ease;
+    }
 
-section {
-    min-height: 100vh;
-    padding: 80px 24px;
-    scroll-margin-top: 70px;
-}
+    body {
+        background-color: var(--surface);
+        color: var(--on-surface);
+        -webkit-font-smoothing: antialiased;
+    }
 
-/* ── Top bar ─────────────────────────────── */
-.bar {
-    position: sticky;
-    top: 0;
-    z-index: 50;
-    display: flex;
-    justify-content: space-between;
-    padding: 12px 22px;
-}
+    section {
+        min-height: 100vh;
+        padding: 80px 24px;
+        /* This is the nav bar height. */
+        scroll-margin-top: 70px;
+    }
 
-.island {
-    background: color-mix(in oklab, var(--surface-c) 72%, transparent);
-    backdrop-filter: blur(26px) saturate(1.6);
-    border-radius: var(--r-full);
-    padding: 6px;
-}
+    /* -------------- Top Bar -------------- */
+    .bar {
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        display: flex;
+        justify-content: space-between;
+        padding: 12px 22px;
+    }
 
-.nav {
-    position: relative;
-}
+    .island {
+        background: color-mix(in oklab, var(--surface-c) 72%, transparent);
+        backdrop-filter: blur(26px) saturate(1.6);
+        border-radius: var(--r-full);
+        padding: 6px;
+    }
 
-.nav a {
-    position: relative;
-    z-index: 1;
-    padding: 8px 16px;
-    color: var(--on-surface-fixed);
-    text-decoration: none;
-    font-size: 14px;
-}
+    /* -------------- Navigation -------------- */
+    .nav {
+        /* Makes .nav the reference point for the .nav-thumb's `position: absolute`. */
+        position: relative;
+        display: flex;
+    }
 
-.nav-thumb {
-    position: absolute;
-    inset-block: 0;
-    left: 0;
-    z-index: 0;
-    border-radius: var(--r-full);
-    background: var(--primary);
-    transition: transform 320ms ease, width 320ms ease;
-}
+    .nav a {
+        padding: 8px 16px;
+        border-radius: var(--r-full);
+        position: relative;
+        z-index: 1;
+        padding: 8px 16px;
+        color: var(--on-surface-fixed);
+        text-decoration: none;
+        font-size: 16px;
+        font-weight: 500;
+        white-space: nowrap;
+    }
+
+    .nav-thumb {
+        position: absolute;
+        inset-block: 0px;
+        left: 0;
+        z-index: 0;
+        border-radius: var(--r-full);
+        background: var(--p-container);
+        transition: transform 320ms ease, width 320ms ease;
+    }
