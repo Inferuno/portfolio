@@ -3,6 +3,9 @@ const links = [...document.querySelectorAll(".nav a")];
 const modeBtn = document.querySelector("#mode");
 
 // -------------- Nav Pill -------------- //
+let jumping = false;
+let timerId = ""
+
 const thumb = document.querySelector(".nav-thumb");
 
 /* Moves the pill behind a link.
@@ -34,13 +37,14 @@ function track() {
     // Sets the current section if every other check passes.
     currentSection = current.id;
 
-    // current.id is "projects", the links are href="#projects."
-    // The # is added so the two can be compared.
-    // The matching link is the one the pill moves to.
-    links.forEach((link) => {
-        if (link.getAttribute("href") === "#" + current.id) syncNav(link);
-    });
-
+    if (!jumping) {
+        // current.id is "projects", the links are href="#projects."
+        // The # is added so the two can be compared.
+        // The matching link is the one the pill moves to.
+        links.forEach((link) => {
+            if (link.getAttribute("href") === "#" + current.id) syncNav(link);
+        });
+    }
     // Changes the hue to the new current section (and runs the transition)
     document.documentElement.style.setProperty("--h", current.dataset.hue);
 }
@@ -68,3 +72,14 @@ modeBtn.addEventListener("click", () => {
 
     setTimeout(() => document.documentElement.classList.remove("theming"), 520);
 })
+
+// -------------- Nav Click -------------- //
+
+links.forEach((link) => {
+    link.addEventListener("click", () => {
+        jumping = true;
+        syncNav(link);
+        clearTimeout(timerId);
+        timerId = setTimeout(() => jumping = false, 700);
+    });
+});
